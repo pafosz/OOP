@@ -1,17 +1,17 @@
 #include <gtest/gtest.h>
 
-#include <functions/functions.h>
+#include <Account/Account.h>
 
 TEST(FunctionsTests, SumStubTest1) {
     // Arrange
-    int lhs = 2;
+    int lhs = 9;
     int rhs = 3;
     
     // Act
     int r = sum_stub(lhs, rhs);
     
     // Assert
-    EXPECT_EQ(r, 5);
+    EXPECT_EQ(r, 12);
 }
 
 TEST(FunctionsTests, SumStubTest2) {
