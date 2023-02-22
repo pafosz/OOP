@@ -1,3 +1,17 @@
 #pragma once
 
-int sum_stub(int lhs, int rhs);
+namespace account {
+
+	enum class Type {
+		payment,
+		deposit,
+		credit
+	};
+
+	class Account {
+		
+	
+
+	};
+}
+
