@@ -1,5 +1,18 @@
-#include <Account/Account.h>
+#include <account/account.h>
 
-int sum_stub(int lhs, int rhs) {
-    return lhs + rhs;
+using namespace account;
+
+Account::Account(Type type, std::string name, float balance, float percent):
+	_type(type),
+	_name(name),
+	_balance(balance),
+	_percent(percent){}
+
+float Account::get_balance() const {
+	return _balance;
+}
+
+
+void Account::update() {
+	++_balance;
 }

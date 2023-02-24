@@ -1,27 +1,18 @@
 #include <gtest/gtest.h>
 
-#include <Account/Account.h>
+#include <account/account.h>
 
-TEST(FunctionsTests, SumStubTest1) {
+using namespace account;
+
+TEST(AccountTests, PaymentTest) {
     // Arrange
-    int lhs = 9;
-    int rhs = 3;
+    Account account(Type::payment, "Ilya", 100, 0);
     
     // Act
-    int r = sum_stub(lhs, rhs);
+    account.update();
     
     // Assert
-    EXPECT_EQ(r, 12);
+    EXPECT_NEAR(account.get_balance(), 101, 0.001);
 }
 
-TEST(FunctionsTests, SumStubTest2) {
-    // Arrange
-    int lhs = -1;
-    int rhs = 3;
-    
-    // Act
-    int r = sum_stub(lhs, rhs);
-    
-    // Assert
-    EXPECT_EQ(r, 2);
-}
+
