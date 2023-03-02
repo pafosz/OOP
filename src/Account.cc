@@ -1,7 +1,9 @@
 #include "Account/account.h"
-//#include <Account/account.h>
+#include <stdexcept>
+
 
 using namespace account;
+using namespace std;
 
 Account::Account() {
 	_balance = 0;
@@ -14,8 +16,20 @@ Account::Account(Type type, std::string name, float balance, float percent) :
 	_balance(balance),
 	_percent(percent) {}
 
-Type Account::get_type() const {
-	return _type;
+std::string Account::get_type() const {
+	switch (_type)
+	{
+	case Type::payment:
+		return "Payment";
+		
+	case Type::deposit:
+		return "Deposit";
+	case Type::credit:
+		return "Credit";
+	default:
+		throw runtime_error("Unknown type");
+	}
+	
 }
 
 std::string Account::get_name() const {
@@ -31,7 +45,7 @@ float Account::get_percent() const {
 }
 
 
-void Account::accrual(Type _type, float _balance, float _percent) {
+void Account::accrual() {
 	switch (_type)
 	{
 	case Type::payment:
