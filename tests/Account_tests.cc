@@ -9,7 +9,7 @@ TEST(AccountTests, PaymentTest) {
     Account account(Type::payment, "Ilya", 100, 0);
     
     // Act
-    account.update();
+    account.accrual();
     
     // Assert
     EXPECT_NEAR(account.get_balance(), 101, 0.001);

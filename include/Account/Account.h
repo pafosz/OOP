@@ -3,7 +3,7 @@
 namespace account {
 
 	enum class Type {
-		payment,
+		payment = 1,
 		deposit,
 		credit
 	};
@@ -14,13 +14,18 @@ namespace account {
 		std::string _name;
 		float _balance;
 		float _percent;
+	
 	public:
+		Account();
+		
 		Account(Type type, std::string name, float balance, float percent);
 
+		Type get_type() const;
+		std::string get_name() const;
 		float get_balance() const;
-
+		float get_percent() const;	
 		
-		void update();
+		void accrual(Type _type, float _balance, float _percent);
 
 	};
 
