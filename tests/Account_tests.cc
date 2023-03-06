@@ -49,6 +49,16 @@ TEST(AccountTests, PaymentTest4) {
     EXPECT_EQ(a1, "Payment");
 }
 
+TEST(AccountTests, PaymentTest5) {
+    // Arrange
+    Account account(Type::deposit, "Ilya Mantrov", 1000, 5);
+
+    // Act
+    account.accrual();        
+
+    // Assert
+    EXPECT_NEAR(account.get_balance(), 1004.166, 0.001);
+}
 
 
 

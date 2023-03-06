@@ -18,7 +18,7 @@ namespace account {
 		float _percent;
 
 	public:
-		Account();
+		
 
 		Account(Type type, std::string name, float balance, float percent);
 
