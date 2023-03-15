@@ -18,7 +18,7 @@ namespace account {
 		float _percent;
 
 	public:
-		
+
 		Account();
 		Account(Type type, std::string name, float balance, float percent);
 
@@ -33,29 +33,30 @@ namespace account {
 
 	class Users {
 	public:
-		
+
 		static const int CAPACITY = 10;
 
 	private:
 
 		Account _list[CAPACITY];
-		int _size;		
+		int _size;
 
 	public:
 
-		Users();
 		Users(int size);
-		
+
 		int get_size() const;
 
-		int index_of_max_balance(const float balance) const;
+		Account operator[](int index) const;
+		Account& operator[](int index);
 
 		void insert(Account User, int index);
 
 		void remove(int index);
 
-		Users operator[](int index) const;
-		Users operator[](int index);
+		Account get_item(int index) const;
+
+		int index_of_max_balance(const float balance) const;
 
 	};
 
