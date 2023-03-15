@@ -50,9 +50,22 @@ Account Users::get_item(int index) const {
 	return _list[index];
 }
 
-int Users::index_of_max_balance(const float balance) const {
+int Users::index_of_max_balance(const Users& users) const {
 
+	int max_index = -1;
+	float max_balance = 0;
 
+	const auto n = users.get_size();
+
+	for (int i = 0; i < n; ++i) {
+		auto value = users[i].get_balance();
+
+		if (max_index == -1 || max_balance < value) {
+			max_index = i;
+			max_balance = value;
+		}
+	}
+	
 }
 
 

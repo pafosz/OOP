@@ -56,7 +56,7 @@ namespace account {
 
 		Account get_item(int index) const;
 
-		int index_of_max_balance(const float balance) const;
+		int index_of_max_balance(const Users& users) const;
 
 	};
 
