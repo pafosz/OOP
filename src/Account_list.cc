@@ -58,14 +58,15 @@ int Users::index_of_max_balance(const Users& users) const {
 	const auto n = users.get_size();
 
 	for (int i = 0; i < n; ++i) {
-		auto value = users[i].get_balance();
+		
+		auto balance = users[i].get_balance();
 
-		if (max_index == -1 || max_balance < value) {
+		if ((max_index == -1) || (max_balance < balance)) {
 			max_index = i;
-			max_balance = value;
+			max_balance = balance;
 		}
 	}
-	
+	return max_index;	
 }
 
 
