@@ -7,7 +7,7 @@ using namespace std;
 
 Account::Account() {}
 
-Account::Account(Type type, std::string name, float balance, float percent) :
+Account::Account(AccountType type, std::string name, float balance, float percent) :
 	_type(type),
 	_name(name),
 	_balance(balance),
@@ -16,12 +16,12 @@ Account::Account(Type type, std::string name, float balance, float percent) :
 std::string Account::get_type() const {
 	switch (_type)
 	{
-	case Type::payment:
+	case AccountType::payment:
 		return "Payment";
 
-	case Type::deposit:
+	case AccountType::deposit:
 		return "Deposit";
-	case Type::credit:
+	case AccountType::credit:
 		return "Credit";
 	default:
 		throw runtime_error("Unknown type");
@@ -41,23 +41,28 @@ float Account::get_percent() const {
 }
 
 
-void Account::accrual() {
+float Account::accrual() {
 	switch (_type)
 	{
-	case Type::payment:
+	case AccountType::payment: break;
+
+	case AccountType::deposit:
+
+		if (_balance > 0)
+			_balance += _balance / 100 * _percent / 12; //начисление на _balance процентов на депозит за мес€ц по ставке _percent
 		break;
-	
-	case Type::deposit:
-		
-		if (_balance > 0) 
-			_balance += _balance / 100 * _percent / 12; //начисление на _balance процентов на депозит за мес€ц по ставке _percent		
-		break;
-	
-	case Type::credit:	
-		
-		if (_balance < 0) 
+
+
+	case AccountType::credit:
+
+		if (_balance < 0)
 			_balance -= abs(_balance) / 100 * _percent / 12; //начисление на _balance процентов на кредит за мес€ц по ставке _percent		
 		break;
-	
+
+
+	default:
+		throw runtime_error("[Account::accrual]Invalid type");
+		break;
 	}
+	return _balance;
 }

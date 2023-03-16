@@ -4,7 +4,7 @@
 #include <cstdio>
 namespace account {
 
-	enum class Type {
+	enum AccountType {
 		payment = 1,
 		deposit,
 		credit
@@ -12,7 +12,7 @@ namespace account {
 
 	class Account {
 
-		Type _type;
+		AccountType _type;
 		std::string _name;
 		float _balance;
 		float _percent;
@@ -20,14 +20,14 @@ namespace account {
 	public:
 
 		Account();
-		Account(Type type, std::string name, float balance, float percent);
+		Account(AccountType type, std::string name, float balance, float percent);
 
 		std::string get_type() const;
 		std::string get_name() const;
 		float get_balance() const;
 		float get_percent() const;
 
-		void accrual();
+		float accrual();
 
 	};
 
@@ -43,20 +43,22 @@ namespace account {
 
 	public:
 
-		Users(int size);
+		Users();
 
 		int get_size() const;
 
-		Account operator[](int index) const;
+		const Account& operator[](int index) const;
 		Account& operator[](int index);
+
+		void add(Account User);
 
 		void insert(Account User, int index);
 
 		void remove(int index);
 
-		Account get_item(int index) const;
+		const Account& get_item(int index) const;		
 
-		int index_of_max_balance(const Users& users) const;
+		int index_of_max_balance() const;
 
 	};
 

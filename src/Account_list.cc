@@ -4,13 +4,13 @@
 using namespace account;
 using namespace std;
 
-Users::Users(int size) : _size(size) { }
+Users::Users() : _size(0) {}
 
 int Users::get_size() const {
 	return _size;
 }
 
-Account Users::operator[](int index) const {
+const Account& Users::operator[](int index) const {
 	if (index < 0 || _size <= index)
 		throw runtime_error("[Users::operator[](const)]Invalid index");
 	return _list[index];
@@ -22,8 +22,16 @@ Account& Users::operator[](int index) {
 	return _list[index];
 }
 
+void Users::add(Account User) {
+	if (_size == CAPACITY)
+		throw runtime_error("[Users::add]Going outside the array");
+
+	_list[_size] = User;
+	++_size;
+}
+
 void Users::insert(Account User, int index) {
-	if(CAPACITY <= _size || _size <= 0)
+	if (CAPACITY <= _size || _size <= 0)
 		throw runtime_error("[Users::insert]Going outside the array");
 	if (index < 0 || _size <= index)
 		throw runtime_error("[Users::insert]Invalid index");
@@ -34,9 +42,7 @@ void Users::insert(Account User, int index) {
 	++_size;
 }
 
-void Users::remove(int index) {
-	if (CAPACITY <= _size || _size <= 0)
-		throw runtime_error("[Users::remove]Going outside the array");
+void Users::remove(int index) {	
 	if(index<0 || _size <= index)
 		throw runtime_error("[Users::remove]Invalid index");
 	--_size;
@@ -44,29 +50,27 @@ void Users::remove(int index) {
 		_list[i] = _list[i + 1];
 }
 
-Account Users::get_item(int index) const {
+const Account& Users::get_item(int index) const {
 	if (index < 0 || _size <= index)
 		throw runtime_error("[Users::get_item]Invalid index");
 	return _list[index];
 }
 
-int Users::index_of_max_balance(const Users& users) const {
+int Users::index_of_max_balance() const {
 
-	int max_index = -1;
-	float max_balance = 0;
+	int first_index = -1;
+	float max_balance = 0;	
 
-	const auto n = users.get_size();
-
-	for (int i = 0; i < n; ++i) {
+	for (int i = 0; i < get_size(); ++i) {
 		
-		auto balance = users[i].get_balance();
+		auto balance = _list[i].get_balance();
 
-		if ((max_index == -1) || (max_balance < balance)) {
-			max_index = i;
+		if ((first_index == -1) || (max_balance < balance)) {
+			first_index = i;
 			max_balance = balance;
 		}
 	}
-	return max_index;	
+	return first_index;	
 }
 
 
