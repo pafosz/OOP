@@ -59,7 +59,6 @@ float Account::accrual() {
 			_balance -= abs(_balance) / 100 * _percent / 12; //начисление на _balance процентов на кредит за мес€ц по ставке _percent		
 		break;
 
-
 	default:
 		throw runtime_error("[Account::accrual]Invalid type");
 		break;

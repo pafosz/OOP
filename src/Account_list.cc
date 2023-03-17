@@ -4,7 +4,7 @@
 using namespace account;
 using namespace std;
 
-Users::Users() : _size(0) {}
+Users::Users() : _size(0) { }
 
 int Users::get_size() const {
 	return _size;
@@ -23,7 +23,7 @@ Account& Users::operator[](int index) {
 }
 
 void Users::add(Account User) {
-	if (_size == CAPACITY)
+	if (CAPACITY == _size)
 		throw runtime_error("[Users::add]Going outside the array");
 
 	_list[_size] = User;

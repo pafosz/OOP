@@ -7,79 +7,122 @@ using namespace account;
 
 TEST(UsersTests, SizeTest) {
 	// Arrange
-	Users user_size(8);
+	Users accounts;
 
+	
+	accounts.add({ payment, "Ilya", 3500, 0 });
+	accounts.add({ payment, "Andrew", 120, 0 });
+	accounts.add({ payment, "Polina", 95500, 0 });
+	accounts.add({ payment, "Oksana", 7550, 0 });
+	
 	// Assert
-	EXPECT_EQ(user_size.get_size(), 8);
+	EXPECT_EQ(accounts.get_size(), 4);
 }
 
 TEST(UsersTests, IndexOfMaxBalance) {
 	// Arrange
-	Users accounts(0);
+	Users accounts;
 	accounts.add({ payment, "Ilya", 3500, 0 });
 	accounts.add({ payment, "Andrew", 120, 0 });
 	accounts.add({ payment, "Polina", 95500, 0 });
 	accounts.add({ payment, "Oksana", 7550, 0 });
 
 	// Act
-	int index = accounts.index_of_max_balance(accounts);
+	int index = accounts.index_of_max_balance();
 
 	// Assert
 	ASSERT_EQ(index, 2);
 }
 
-TEST(UsersTests, InsertTest) {
+TEST(UsersTests, InsertThrowTest) {
 	// Arrange
-	Users accounts(0);
+	Users accounts;
 	accounts.add({ payment, "Ilya", 3500, 0 });
 	accounts.add({ payment, "Andrew", 120, 0 });
 	accounts.add({ payment, "Polina", 95500, 0 });
 	accounts.add({ payment, "Oksana", 7550, 0 });
 
 	// Act
-	int index = accounts.index_of_max_balance(accounts);
+	int index = accounts.index_of_max_balance();
 
 	// Assert
-	ASSERT_ANY_THROW(accounts.insert({ credit, "Lera" , -8, 1 }, 15));
+	ASSERT_ANY_THROW(accounts.insert({ credit, "Lera" , -250, 1 }, 15));
+	ASSERT_ANY_THROW(accounts.insert({ deposit, "Vanya", 6000, 2 }, 5));
+	ASSERT_NO_THROW(accounts.insert({ payment, "Ksenia", 2000, 0 }, 2));
 }
 
-TEST(UsersTests, RemoveZeroIndexTest) {
+TEST(UsersTests, RemoveThrowTest) {
 	// Arrange
-	Users accounts(0);
+	Users accounts;
 
 	// Act
+	accounts.add({ payment, "Ilya", 3500, 0 });
+	accounts.add({ payment, "Andrew", 120, 0 });
+	accounts.add({ payment, "Polina", 95500, 0 });
+	accounts.add({ payment, "Oksana", 7550, 0 });
 
 	// Assert
-	ASSERT_ANY_THROW(accounts.remove(0));
+	ASSERT_ANY_THROW(accounts.remove(5));
+	ASSERT_NO_THROW(accounts.remove(2));
 }
+
+TEST(UsersTests, AddThrowTest) {
+	// Arrange
+	Users accounts;
+
+	// Act
+	accounts.add({ payment, "Ilya", 3500, 0 });
+	accounts.add({ payment, "Andrew", 120, 0 });
+	accounts.add({ payment, "Polina", 95500, 0 });
+	accounts.add({ payment, "Oksana", 7550, 0 });
+	accounts.add({ payment, "Ilya", 3500, 0 });
+	accounts.add({ payment, "Andrew", 120, 0 });
+	accounts.add({ payment, "Polina", 95500, 0 });
+	accounts.add({ payment, "Oksana", 7550, 0 });
+	accounts.add({ payment, "Polina", 95500, 0 });	
+
+	// Assert
+	ASSERT_ANY_THROW(accounts.add({ credit, "Lera" , -250, 1 }));
+	
+	accounts.remove(2);
+	accounts.remove(3);
+
+	ASSERT_NO_THROW(accounts.add({ deposit, "Vanya", 6000, 2 }));
+
+}
+
+
 
 TEST(UsersTests, Get_Item_ThrowTest) {
 	// Arrange
-	Users accounts(0);
+	Users accounts;
 	// Act
 
 	// Assert
 	ASSERT_ANY_THROW(accounts.get_item(0));
 }
 
-TEST(UsersTests, Test) {
+TEST(UsersTests, AccrualListTest) {
 	// Arrange
-	Users accounts(0);
+	Users accounts;
 	accounts.add({ deposit, "Ilya", 3500, 12 });
-	accounts.add({ payment, "Andrew", 120, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
+	accounts.add({ credit, "Andrew", -120, 24.9 });
+	accounts.add({ deposit, "Polina", 95500, 7.8 });
 	accounts.add({ payment, "Oksana", 7550, 0 });
 
-	// Act
-	int index = accounts[0].accrual();
+	// Act	
+	for (int i = 0; i < accounts.get_size(); ++i) {
+		accounts[i].accrual();
+	}
+	int index = accounts.index_of_max_balance();
 
 	// Assert
-	ASSERT_EQ(index, 3535);
+	ASSERT_EQ(index, 2);
 }
 
 TEST(UsersTests, Get_ItemTest) {
 	// Arrange
-	Users accounts(0);
+	Users accounts;
 	accounts.add({ payment, "Ilya", 3500, 0 });
 	accounts.add({ payment, "Andrew", 120, 0 });
 	accounts.add({ payment, "Polina", 95500, 0 });
