@@ -16,7 +16,7 @@ TEST(AccountTests, PaymentTest) {
 	float balance = account.get_balance();
 	float accrual = account.accrual();
 
-	// Assert
+	// Assert	
 	EXPECT_EQ(type, "Payment");
 	EXPECT_EQ(percent, 0);
 	EXPECT_EQ(name, "Ilya Mantrov");

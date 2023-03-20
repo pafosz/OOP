@@ -45,6 +45,7 @@ void Users::insert(Account User, int index) {
 void Users::remove(int index) {	
 	if(index<0 || _size <= index)
 		throw runtime_error("[Users::remove]Invalid index");
+
 	--_size;
 	for (int i = index; i < _size; ++i)
 		_list[i] = _list[i + 1];

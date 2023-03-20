@@ -9,12 +9,12 @@ TEST(UsersTests, SizeTest) {
 	// Arrange
 	Users accounts;
 
-	
+
 	accounts.add({ payment, "Ilya", 3500, 0 });
 	accounts.add({ payment, "Andrew", 120, 0 });
 	accounts.add({ payment, "Polina", 95500, 0 });
 	accounts.add({ payment, "Oksana", 7550, 0 });
-	
+
 	// Assert
 	EXPECT_EQ(accounts.get_size(), 4);
 }
@@ -79,19 +79,18 @@ TEST(UsersTests, AddThrowTest) {
 	accounts.add({ payment, "Andrew", 120, 0 });
 	accounts.add({ payment, "Polina", 95500, 0 });
 	accounts.add({ payment, "Oksana", 7550, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });	
+	accounts.add({ payment, "Polina", 95500, 0 });
+	accounts.add({ });
 
 	// Assert
 	ASSERT_ANY_THROW(accounts.add({ credit, "Lera" , -250, 1 }));
-	
+
 	accounts.remove(2);
 	accounts.remove(3);
 
 	ASSERT_NO_THROW(accounts.add({ deposit, "Vanya", 6000, 2 }));
 
 }
-
-
 
 TEST(UsersTests, Get_Item_ThrowTest) {
 	// Arrange
