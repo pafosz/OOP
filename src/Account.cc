@@ -5,7 +5,11 @@
 using namespace account;
 using namespace std;
 
-Account::Account() {}
+Account::Account() :
+	_type(AccountType::payment),
+	_name(""),
+	_balance(0),
+	_percent(0) {}
 
 Account::Account(AccountType type, std::string name, float balance, float percent) :
 	_type(type),
