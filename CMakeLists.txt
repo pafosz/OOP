@@ -18,7 +18,13 @@ if(MSVC)
 endif()
 
 # Объявляем библиотеку
-add_library(account SHARED "include/account/account.h" "src/account.cc" "src/account_list.cc")
+add_library(account SHARED 
+    "include/account/account.h" 
+    "include/Account/account_menu.h"
+    "src/account.cc"
+    "src/account_list.cc"    
+    "src/account_menu.cc"
+)
 target_include_directories(account PUBLIC "include")
 
 # Подключаем googletest
@@ -30,3 +36,7 @@ FetchContent_MakeAvailable(googletest)
 # Объявляем тесты
 add_executable(account_tests "tests/account_tests.cc" "tests/account_list_tests.cc")
 target_link_libraries(account_tests account GTest::gtest_main)
+
+# Объявляем исполняемый файл
+add_executable(main "src/main.cc")
+target_link_libraries(main account)

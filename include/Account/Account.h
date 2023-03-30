@@ -2,6 +2,12 @@
 #include <string>
 #include <stdexcept>
 #include <cstdio>
+#include <utility>
+#include <algorithm>
+#include <windows.h>
+#include <conio.h>
+#include <iostream>
+
 namespace account {
 
 	enum AccountType {
@@ -32,18 +38,25 @@ namespace account {
 	};
 
 	class Users {
-	public:
-
-		static const int CAPACITY = 10;
 
 	private:
 
-		Account _list[CAPACITY];
+		Account** _list;
 		int _size;
 
 	public:
 
 		Users();
+
+		Account* const get_list() const;
+
+		Users(const Users& copy);
+
+		void swap(Users& rhs);
+		
+		Users& operator=(const Users& rhs);
+
+		~Users();		
 
 		int get_size() const;
 
@@ -56,7 +69,11 @@ namespace account {
 
 		void remove(int index);
 
-		const Account& get_item(int index) const;		
+		void clear();
+
+		const Account& get_item(int index) const;
+
+		
 
 		int index_of_max_balance() const;
 
