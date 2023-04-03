@@ -10,22 +10,19 @@ Users::Users() : _size(0) { }
 
 Users::Users(const Users& copy)
 {
-	
+	_size = copy._size;
+	_list = copy._list;
 };
 
-void Users::swap(Users& rhs)
+void Users::swap(Users& rhs) noexcept
 {
-	int rhs_size(rhs.get_size());
-	Account* rhs_list(rhs.get_list());
-
-	std::swap(_size, rhs_size);
-	std::swap(*_list, rhs_list);
+	std::swap(_size, rhs._size);
+	std::swap(_list, rhs._list);
 }
 
-Users& Users::operator=(const Users& rhs)
-{
-	Users copy(rhs);
-	Users::swap(copy);
+Users& Users::operator=(Users copy)
+{	
+	this -> swap(copy);
 	return *this;
 }
 

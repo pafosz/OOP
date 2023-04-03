@@ -54,7 +54,7 @@ namespace account {
 
 		void swap(Users& rhs);
 		
-		Users& operator=(const Users& rhs);
+		Users& operator=(Users copy);
 
 		~Users();		
 
