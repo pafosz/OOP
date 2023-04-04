@@ -17,4 +17,17 @@ void ConsoleCursorVisible(bool show, short size)
 	SetConsoleCursorInfo(hStdOut, &structCursorInfo);
 }
 
+void menu::print_menu(const string menu) 
+{	
+	short x = 50, y = 12;
+	for (int i = 0; i < (sizeof(Menu) / sizeof(*Menu)); ++i)
+	{
+		if (i == active_menu) 	
+			SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		else 	
+			SetConsoleTextAttribute(hStdOut, FOREGROUND_GREEN);
+		menu::GoToXY(x, y++);
+		cout << menu[i] << endl;
+	}
+}
 

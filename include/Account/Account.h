@@ -46,9 +46,7 @@ namespace account {
 
 	public:
 
-		Users();
-
-		Account* const get_list() const;
+		Users();		
 
 		Users(const Users& copy);
 
@@ -63,9 +61,9 @@ namespace account {
 		const Account& operator[](int index) const;
 		Account& operator[](int index);
 
-		void add(Account User);
+		void add(Account* user);
 
-		void insert(Account User, int index);
+		void insert(Account* user, int index);
 
 		void remove(int index);
 
