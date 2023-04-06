@@ -26,6 +26,7 @@ namespace account {
 	public:
 
 		Account();
+		Account(AccountType type, std::string name, float balance);
 		Account(AccountType type, std::string name, float balance, float percent);
 
 		std::string get_type() const;
@@ -33,9 +34,13 @@ namespace account {
 		float get_balance() const;
 		float get_percent() const;
 
+		
+
 		float accrual();
 
 	};
+
+	std::ostream& operator<<(std::ostream& stream, const Account& c);
 
 	class Users {
 
@@ -46,15 +51,15 @@ namespace account {
 
 	public:
 
-		Users();		
+		Users();
 
 		Users(const Users& copy);
 
 		void swap(Users& rhs);
-		
+
 		Users& operator=(Users copy);
 
-		~Users();		
+		~Users();
 
 		int get_size() const;
 
@@ -71,12 +76,13 @@ namespace account {
 
 		const Account& get_item(int index) const;
 
-		
+
 
 		int index_of_max_balance() const;
 
 	};
 
+	std::ostream& operator<<(std::ostream& stream, const Users& list);
 
 }
 

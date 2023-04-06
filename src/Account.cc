@@ -11,6 +11,11 @@ Account::Account() :
 	_balance(0),
 	_percent(0) {}
 
+Account::Account(AccountType type, std::string name, float balance) :
+	_type(AccountType::payment),
+	_name(name),
+	_balance(balance) {}
+
 Account::Account(AccountType type, std::string name, float balance, float percent) :
 	_type(type),
 	_name(name),
@@ -44,7 +49,6 @@ float Account::get_percent() const {
 	return _percent;
 }
 
-
 float Account::accrual() {
 	switch (_type)
 	{
@@ -68,4 +72,16 @@ float Account::accrual() {
 		break;
 	}
 	return _balance;
+}
+
+std::ostream& account::operator<<(std::ostream& stream, const Account& user) {
+	if (user.get_type() == "Payment")
+		stream << "Account type: " << user.get_type() << " \n " 
+		<< "Owner's full name: " << user.get_name() << " \n " << "Balance: " << user.get_balance() << "ð." << endl;
+	else
+		stream << "Account type: " << user.get_type() << " \n "
+		<< "Owner's full name: " << user.get_name() << " \n " 
+		<< "Balance: " << user.get_balance() << "ð.\n"
+		<< "Percent: " << user.get_percent() << "%" << endl;
+	return stream;
 }

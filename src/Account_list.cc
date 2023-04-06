@@ -89,11 +89,13 @@ const Account& Users::get_item(int index) const {
 	return *_list[index];}
 
 
-
-ostream& operator<<(ostream& stream, const Account& c) {
-	stream << c.get_type() << " " << c.get_name() << " " << c.get_balance() << " " << c.get_percent();	
+std::ostream& account::operator<<(std::ostream& stream, const Users& list) {
+	stream << list.get_size() << " accounts: " << endl;
+	for (int i = 0; i < list.get_size(); ++i)
+		cout << "  " << i + 1 << ") " << list.get_item(i);
 	return stream;
 }
+
 
 int Users::index_of_max_balance() const {
 
