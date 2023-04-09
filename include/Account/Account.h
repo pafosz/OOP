@@ -55,7 +55,7 @@ namespace account {
 
 		Users(const Users& copy);
 
-		void swap(Users& rhs);
+		void swap(Users& rhs) noexcept;
 
 		Users& operator=(Users copy);
 
@@ -66,9 +66,9 @@ namespace account {
 		const Account& operator[](int index) const;
 		Account& operator[](int index);
 
-		void add(Account* user);
+		void add(Account user);
 
-		void insert(Account* user, int index);
+		void insert(Account user, int index);
 
 		void remove(int index);
 

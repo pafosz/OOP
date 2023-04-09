@@ -1,3 +1,4 @@
+
 #include "Account/account.h"
 
 
@@ -8,7 +9,7 @@ Users::Users() : _list(nullptr), _size(0) { }
 
 Users::Users(const Users& copy) :
 	_list(new Account* [copy._size]),
-	_size(copy._size){
+	_size(copy._size) {
 	for (int i = 0; i < _size; ++i)
 		_list[i] = new Account(*copy._list[i]);
 };
@@ -26,10 +27,7 @@ Users& Users::operator=(Users copy)
 }
 
 Users::~Users()
-{
-	for (int i = 0; i < _size; ++i) {
-		delete _list[i];
-	}
+{	
 	delete[] _list;
 }
 
@@ -49,12 +47,12 @@ Account& Users::operator[](int index) {
 	return *_list[index];
 }
 
-void Users::add(Account* user) {
+void Users::add(Account user) {
 
 	auto list = new Account * [_size + 1];
 	for (int i = 0; i < _size; ++i)
 		list[i] = _list[i];
-	list[_size] = user;
+	list[_size] = new Account(user);
 
 	delete[] _list;
 
@@ -62,13 +60,23 @@ void Users::add(Account* user) {
 	++_size;
 }
 
-void Users::insert(Account* user, int index) {	
+void Users::insert(Account user, int index) {
 	if (index < 0 || _size <= index)
 		throw runtime_error("[Users::insert]Invalid index");
 
+	auto list = new Account * [_size + 1]();
+	
+	for (int i = 0; i < _size; ++i)
+		list[i] = _list[i];
+
 	for (int i = _size; i > index; --i)
-		_list[i] = _list[i - 1];
-	_list[index] = user;
+		list[i] = list[i - 1];
+	list[index] = new Account();
+	*list[index] = user;
+
+	delete[] _list;
+
+	_list = list;
 	++_size;
 }
 
@@ -81,12 +89,23 @@ void Users::remove(int index) {
 		_list[i] = _list[i + 1];
 }
 
-void Users::clear() { _size = 0; }
+
+void Users::clear() {
+	if (_list == nullptr)
+		return;
+
+	for (int i = 0; i < _size; ++i)
+		delete _list[i];
+	_size = 0;
+	
+	
+}
 
 const Account& Users::get_item(int index) const {
 	if (index < 0 || _size <= index)
 		throw runtime_error("[Users::get_item]Invalid index");
-	return *_list[index];}
+	return *_list[index];
+}
 
 
 std::ostream& account::operator<<(std::ostream& stream, const Users& list) {

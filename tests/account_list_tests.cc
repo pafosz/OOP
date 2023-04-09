@@ -4,16 +4,23 @@
 
 using namespace account;
 
+Account User1 = { payment, "Ilya", 3500, 0 };
+Account User2 = { deposit, "Andrew", 120, 2 };
+Account User3 = { credit, "Polina", 95500, 1 };
+Account User4 = { deposit, "Oksana", 7550, 1.2 };
+Account User5 = { credit, "Lera" , -250, 1 };
+Account User6 = { deposit, "Vanya", 6000, 2 };
+
 
 TEST(UsersTests, SizeTest) {
 	// Arrange
 	Users accounts;
-
-
-	accounts.add({ payment, "Ilya", 3500, 0 });
-	accounts.add({ payment, "Andrew", 120, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
-	accounts.add({ payment, "Oksana", 7550, 0 });
+	
+	// Act
+	accounts.add(User1);
+	accounts.add(User2);
+	accounts.add(User3);
+	accounts.add(User4);
 
 	// Assert
 	EXPECT_EQ(accounts.get_size(), 4);
@@ -21,13 +28,13 @@ TEST(UsersTests, SizeTest) {
 
 TEST(UsersTests, IndexOfMaxBalance) {
 	// Arrange
-	Users accounts;
-	accounts.add({ payment, "Ilya", 3500, 0 });
-	accounts.add({ payment, "Andrew", 120, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
-	accounts.add({ payment, "Oksana", 7550, 0 });
+	Users accounts;	
 
 	// Act
+	accounts.add(User1);
+	accounts.add(User2);
+	accounts.add(User3);
+	accounts.add(User4);
 	int index = accounts.index_of_max_balance();
 
 	// Assert
@@ -37,18 +44,18 @@ TEST(UsersTests, IndexOfMaxBalance) {
 TEST(UsersTests, InsertThrowTest) {
 	// Arrange
 	Users accounts;
-	accounts.add({ payment, "Ilya", 3500, 0 });
-	accounts.add({ payment, "Andrew", 120, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
-	accounts.add({ payment, "Oksana", 7550, 0 });
 
 	// Act
-	int index = accounts.index_of_max_balance();
+	accounts.add(User1);
+	accounts.add(User2);
+	accounts.add(User3);
+	accounts.add(User4);
+	//int index = accounts.index_of_max_balance();
 
 	// Assert
-	ASSERT_ANY_THROW(accounts.insert({ credit, "Lera" , -250, 1 }, 15));
-	ASSERT_ANY_THROW(accounts.insert({ deposit, "Vanya", 6000, 2 }, 5));
-	ASSERT_NO_THROW(accounts.insert({ payment, "Ksenia", 2000, 0 }, 2));
+	
+	ASSERT_ANY_THROW(accounts.insert(User5, 5));
+	ASSERT_NO_THROW(accounts.insert(User5, 2));
 }
 
 TEST(UsersTests, RemoveThrowTest) {
@@ -56,10 +63,10 @@ TEST(UsersTests, RemoveThrowTest) {
 	Users accounts;
 
 	// Act
-	accounts.add({ payment, "Ilya", 3500, 0 });
-	accounts.add({ payment, "Andrew", 120, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
-	accounts.add({ payment, "Oksana", 7550, 0 });
+	accounts.add(User1);
+	accounts.add(User2);
+	accounts.add(User3);
+	accounts.add(User4);
 
 	// Assert
 	ASSERT_ANY_THROW(accounts.remove(5));
@@ -71,24 +78,24 @@ TEST(UsersTests, AddThrowTest) {
 	Users accounts;
 
 	// Act
-	accounts.add({ payment, "Ilya", 3500, 0 });
-	accounts.add({ payment, "Andrew", 120, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
-	accounts.add({ payment, "Oksana", 7550, 0 });
-	accounts.add({ payment, "Ilya", 3500, 0 });
-	accounts.add({ payment, "Andrew", 120, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
-	accounts.add({ payment, "Oksana", 7550, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
-	accounts.add({ });
+	accounts.add(User1);
+	accounts.add(User2);
+	accounts.add(User3);
+	accounts.add(User4);
+	accounts.add(User5);
+	accounts.add(User6);
+	accounts.add(User1);
+	accounts.add(User2);
+	accounts.add(User3);
+	
 
 	// Assert
-	ASSERT_ANY_THROW(accounts.add({ credit, "Lera" , -250, 1 }));
+	
 
 	accounts.remove(2);
 	accounts.remove(3);
 
-	ASSERT_NO_THROW(accounts.add({ deposit, "Vanya", 6000, 2 }));
+	ASSERT_NO_THROW(accounts.add(User5));
 
 }
 
@@ -104,12 +111,14 @@ TEST(UsersTests, Get_Item_ThrowTest) {
 TEST(UsersTests, AccrualListTest) {
 	// Arrange
 	Users accounts;
-	accounts.add({ deposit, "Ilya", 3500, 12 });
-	accounts.add({ credit, "Andrew", -120, 24.9 });
-	accounts.add({ deposit, "Polina", 95500, 7.8 });
-	accounts.add({ payment, "Oksana", 7550, 0 });
+	
 
-	// Act	
+	// Act
+	accounts.add(User1);
+	accounts.add(User2);
+	accounts.add(User3);
+	accounts.add(User4);
+
 	for (int i = 0; i < accounts.get_size(); ++i) {
 		accounts[i].accrual();
 	}
@@ -122,12 +131,13 @@ TEST(UsersTests, AccrualListTest) {
 TEST(UsersTests, Get_ItemTest) {
 	// Arrange
 	Users accounts;
-	accounts.add({ payment, "Ilya", 3500, 0 });
-	accounts.add({ payment, "Andrew", 120, 0 });
-	accounts.add({ payment, "Polina", 95500, 0 });
-	accounts.add({ payment, "Oksana", 7550, 0 });
-
+	
 	// Act
+	accounts.add(User1);
+	accounts.add(User2);
+	accounts.add(User3);
+	accounts.add(User4);
+
 	Account index = accounts.get_item(3);
 
 	// Assert
