@@ -42,8 +42,8 @@ namespace account {
 
 	std::ostream& operator<<(std::ostream& stream, const Account& c);
 
-	class Users {
-
+	class Users 
+	{
 	private:
 
 		Account** _list;
@@ -66,7 +66,7 @@ namespace account {
 		const Account& operator[](int index) const;
 		Account& operator[](int index);
 
-		void add(Account user);
+		void add(const Account& user);
 
 		void insert(Account user, int index);
 

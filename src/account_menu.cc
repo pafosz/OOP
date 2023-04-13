@@ -11,7 +11,7 @@ void menu::text_menu()
 	cout << " | 1 - добавить счЄт                                                 |" << endl;
 	cout << " | 2 - вставить новый счЄт по индексу                                |" << endl;
 	cout << " | 3 - удалить счЄт по индексу                                       |" << endl;
-	cout << " | 4 - вывести список счетов				             |" << endl;
+	cout << " | 4 - вывести список счетов                                         |" << endl;
 	cout << " | 5 - рассчитать баланс счЄта по индексу после начислени€ процентов |" << endl;
 	cout << " | 6 - поиск первого счЄта с наибольшим балансом                     |" << endl;
 	cout << " | 7 - выйти из системы                                              |" << endl;
@@ -30,13 +30,7 @@ int menu::get_key()
 	}
 }
 
-int menu::input_index()
-{
-	int index;
-	cout << "¬ведите индекс: ";
-	cin >> index;
-	return index;
-}
+
 Account menu::create_account()
 {
 	Account user;
@@ -46,14 +40,16 @@ Account menu::create_account()
 
 	cout << "¬ведите тип счЄта(1 - рассчЄтный, 2 - вклад, 3 - кредит): ";
 	cin >> type;
-	if (type != 1 && type != 2 && type != 3) throw runtime_error("[]Invalid type");
+	if (type != 1 && type != 2 && type != 3) 
+		throw runtime_error("[]Invalid type");
 	cout << "¬ведите им€ пользовател€: ";
 	getline(cin >> ws, name);
 	cout << "¬ведите баланс: ";
 	cin >> balance;
+	if ((AccountType)type == credit && balance > 0)
+		throw runtime_error("Credit balance cannot be positive");
 	if ((AccountType)type == payment) {
-		user = { (AccountType)type, name, balance };
-		
+		user = { (AccountType)type, name, balance };		
 	}
 	else {
 		cout << "¬ведите процент: ";

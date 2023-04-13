@@ -61,8 +61,7 @@ float Account::accrual() {
 		break;
 
 
-	case AccountType::credit:
-
+	case AccountType::credit:		
 		if (_balance < 0)
 			_balance -= abs(_balance) / 100 * _percent / 12; //начисление на _balance процентов на кредит за мес€ц по ставке _percent		
 		break;

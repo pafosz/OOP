@@ -37,8 +37,7 @@ int main()
 		switch (choice)
 		{
 		case 49:
-			user = create_account();
-			list.add(user);
+			list.add(create_account());
 			break;
 		case 50:
 			cout << "¬ведите индекс дл€ вставки: ";

@@ -10,7 +10,5 @@ namespace menu
 {
 	void text_menu();
 	int get_key();
-	int get_key();
-	int input_index();
 	account::Account create_account();
 }

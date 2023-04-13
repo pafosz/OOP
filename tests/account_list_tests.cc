@@ -56,6 +56,7 @@ TEST(UsersTests, InsertThrowTest) {
 	
 	ASSERT_ANY_THROW(accounts.insert(User5, 5));
 	ASSERT_NO_THROW(accounts.insert(User5, 2));
+
 }
 
 TEST(UsersTests, RemoveThrowTest) {
@@ -71,6 +72,7 @@ TEST(UsersTests, RemoveThrowTest) {
 	// Assert
 	ASSERT_ANY_THROW(accounts.remove(5));
 	ASSERT_NO_THROW(accounts.remove(2));
+	EXPECT_EQ(accounts[2].get_balance(), 7550);
 }
 
 TEST(UsersTests, AddThrowTest) {

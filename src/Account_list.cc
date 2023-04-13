@@ -1,15 +1,16 @@
 
 #include "Account/account.h"
 
-
-using namespace account;
 using namespace std;
+using namespace account;
+
 
 Users::Users() : _list(nullptr), _size(0) { }
 
 Users::Users(const Users& copy) :
 	_list(new Account* [copy._size]),
-	_size(copy._size) {
+	_size(copy._size) 
+{
 	for (int i = 0; i < _size; ++i)
 		_list[i] = new Account(*copy._list[i]);
 };
@@ -22,14 +23,26 @@ void Users::swap(Users& rhs) noexcept
 
 Users& Users::operator=(Users copy)
 {
-	this->swap(copy);
+	swap(copy);
 	return *this;
 }
 
 Users::~Users()
 {	
-	delete[] _list;
+	clear();
 }
+void Users::clear() {
+	if (_list == nullptr)
+		return;
+
+	for (int i = 0; i < _size; ++i)
+		delete _list[i];
+	_size = 0;
+	delete[] _list;
+	_list = nullptr;
+}
+
+
 
 int Users::get_size() const {
 	return _size;
@@ -47,7 +60,7 @@ Account& Users::operator[](int index) {
 	return *_list[index];
 }
 
-void Users::add(Account user) {
+void Users::add(const Account& user) {
 
 	auto list = new Account * [_size + 1];
 	for (int i = 0; i < _size; ++i)
@@ -64,15 +77,14 @@ void Users::insert(Account user, int index) {
 	if (index < 0 || _size <= index)
 		throw runtime_error("[Users::insert]Invalid index");
 
-	auto list = new Account * [_size + 1]();
+	auto list = new Account * [_size + 1];
 	
 	for (int i = 0; i < _size; ++i)
 		list[i] = _list[i];
 
 	for (int i = _size; i > index; --i)
 		list[i] = list[i - 1];
-	list[index] = new Account();
-	*list[index] = user;
+	list[index] = new Account(user);
 
 	delete[] _list;
 
@@ -83,23 +95,13 @@ void Users::insert(Account user, int index) {
 void Users::remove(int index) {
 	if (index < 0 || _size <= index)
 		throw runtime_error("[Users::remove]Invalid index");
-
-	--_size;
-	for (int i = index; i < _size; ++i)
+		
+	delete _list[index];
+	for (int i = index; i < _size - 1; ++i)
 		_list[i] = _list[i + 1];
+	--_size;
 }
 
-
-void Users::clear() {
-	if (_list == nullptr)
-		return;
-
-	for (int i = 0; i < _size; ++i)
-		delete _list[i];
-	_size = 0;
-	
-	
-}
 
 const Account& Users::get_item(int index) const {
 	if (index < 0 || _size <= index)
