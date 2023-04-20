@@ -61,7 +61,7 @@ Account& Users::operator[](int index) {
 }
 
 void Users::add(const Account& user) {
-
+			
 	auto list = new Account * [_size + 1];
 	for (int i = 0; i < _size; ++i)
 		list[i] = _list[i];

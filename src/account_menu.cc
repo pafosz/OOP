@@ -18,16 +18,11 @@ void menu::text_menu()
 	cout << "  -------------------------------------------------------------------" << endl;
 }
 
-
-
 int menu::get_key()
 {
 	int key = _getch();
 	if ((key == 49) || (key == 50) || (key == 51) || (key == 52) || (key == 53) || (key == 54) || (key == 55))	
-		return key;
-	else {
-		throw runtime_error("[menu::get_key]Invalid index");
-	}
+		return key;	
 }
 
 
@@ -41,13 +36,13 @@ Account menu::create_account()
 	cout << "Введите тип счёта(1 - рассчётный, 2 - вклад, 3 - кредит): ";
 	cin >> type;
 	if (type != 1 && type != 2 && type != 3) 
-		throw runtime_error("[]Invalid type");
+		throw runtime_error("Не знаю такого типа");
 	cout << "Введите имя пользователя: ";
 	getline(cin >> ws, name);
 	cout << "Введите баланс: ";
 	cin >> balance;
 	if ((AccountType)type == credit && balance > 0)
-		throw runtime_error("Credit balance cannot be positive");
+		throw runtime_error("Кредит не может иметь положительный баланс");
 	if ((AccountType)type == payment) {
 		user = { (AccountType)type, name, balance };		
 	}

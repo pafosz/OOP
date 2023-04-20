@@ -18,12 +18,8 @@ int main()
 
 	while (true)
 	{
-		int choice = menu::get_key();
-
-		string name;
-		int type = 1;
-		int index = 0;
-		float balance = 0, percent = 0;
+		int choice = menu::get_key();		
+		int index = 0;		
 
 		system("cls");
 		menu::text_menu();
@@ -42,8 +38,8 @@ int main()
 		case 50:
 			cout << "¬ведите индекс дл€ вставки: ";
 			cin >> index;
-			user = create_account();
-			list.insert(user, index);
+			
+			list.insert(create_account(), index);
 			break;
 		case 51:
 			cout << "¬ведите индекс счЄта, который хотите удалить: ";
