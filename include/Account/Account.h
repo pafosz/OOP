@@ -30,7 +30,7 @@ namespace account {
 		float get_percent() const;
 
 
-		virtual void print(std::ostream& stream) const = 0;
+		virtual void print() const = 0;
 
 		virtual std::shared_ptr<Account> clone() const = 0;
 
@@ -43,20 +43,18 @@ namespace account {
 		Payment();
 		Payment(std::string name, float balance);
 
-		void print(std::ostream& stream) const override;
-		std::shared_ptr<Account> clone() const override;
-
-		
+		void print() const override;
+		std::shared_ptr<Account> clone() const override;		
 	};
 
 	class Deposit : public Account {
-	
+
 	public:
 
 		Deposit();
 		Deposit(std::string name, float balance, float percent);
 
-		void print(std::ostream& stream) const override;
+		void print() const override;
 		std::shared_ptr<Account> clone() const override;
 
 		float accrual() const override;
@@ -69,55 +67,52 @@ namespace account {
 		Credit();
 		Credit(std::string name, float balance, float percent);
 
-		void print(std::ostream& stream) const override;
+		void print() const override;
 		std::shared_ptr<Account> clone() const override;
 
 		float accrual() const override;
 	};
-
 	
 
-	
+	using AccountPtr = std::shared_ptr<Account>;
 	
 	class AccountList 
 	{
 	private:
 
-		Account** _list;
-		int _size;
+		std::vector<AccountPtr> _list;	
 
 	public:
 
-		AccountList();
+		AccountList() = default;
 
-		AccountList(const AccountList& copy);
+		AccountList(const AccountList& list);
 
-		void swap(AccountList& rhs) noexcept;
+		void swap(AccountList& list) noexcept;
 
-		AccountList& operator=(AccountList copy);
+		AccountList& operator=(AccountList list);
 
-		~AccountList();
+		
+		const AccountPtr operator[](size_t index) const;
+		AccountPtr operator[](size_t index);
 
-		int get_size() const;
+		void add(AccountPtr account);
 
-		const Account& operator[](int index) const;
-		Account& operator[](int index);
-
-		void add(const Account& user);
-
-		void insert(Account user, int index);
+		size_t size() const;
+		
+		void insert(AccountPtr account, int index);
 
 		void remove(int index);
 
-		void clear();
+		void print() const;
 
-		const Account& get_item(int index) const;
+		void clear();	
 
 		int index_of_max_balance() const;
 
 	};
 
-	std::ostream& operator<<(std::ostream& stream, const AccountList& list);
+	
 
 }
 
