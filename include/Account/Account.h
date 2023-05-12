@@ -10,7 +10,7 @@
 #include <memory>
 #include <vector>
 
-namespace account {	
+namespace account {
 
 	class Account {
 	protected:
@@ -18,13 +18,13 @@ namespace account {
 		std::string _name;
 		float _balance;
 		float _percent;
-		
+
 
 	public:
 		Account();
 		Account(std::string name, float balance);
 		Account(std::string name, float balance, float percent);
-		
+
 		std::string get_name() const;
 		float get_balance() const;
 		float get_percent() const;
@@ -44,7 +44,7 @@ namespace account {
 		Payment(std::string name, float balance);
 
 		void print() const override;
-		std::shared_ptr<Account> clone() const override;		
+		std::shared_ptr<Account> clone() const override;
 	};
 
 	class Deposit : public Account {
@@ -72,15 +72,15 @@ namespace account {
 
 		float accrual() const override;
 	};
-	
+
 
 	using AccountPtr = std::shared_ptr<Account>;
-	
-	class AccountList 
+
+	class AccountList
 	{
 	private:
 
-		std::vector<AccountPtr> _list;	
+		std::vector<AccountPtr> _list;
 
 	public:
 
@@ -92,27 +92,26 @@ namespace account {
 
 		AccountList& operator=(AccountList list);
 
-		
 		const AccountPtr operator[](size_t index) const;
 		AccountPtr operator[](size_t index);
+		
+		size_t get_size() const;
 
 		void add(AccountPtr account);
 
-		size_t size() const;
-		
 		void insert(AccountPtr account, int index);
 
 		void remove(int index);
 
 		void print() const;
 
-		void clear();	
+		void clear();
 
 		int index_of_max_balance() const;
 
 	};
 
-	
+
 
 }
 

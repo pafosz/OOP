@@ -5,7 +5,7 @@ using namespace std;
 using namespace account;
 
 AccountList::AccountList(const AccountList& list) {
-	for (int i = 0; i < list.size(); ++i) {
+	for (int i = 0; i < _list.size(); ++i) {
 		_list.push_back(list[i]->clone());
 	}
 };
@@ -19,16 +19,9 @@ void AccountList::swap(AccountList& list) noexcept {
 	_list.swap(list._list);
 }
 
-//void AccountList::clear() {
-//	if (_list == nullptr)
-//		return;
-//
-//	for (int i = 0; i < _size; ++i)
-//		delete _list[i];
-//	_size = 0;
-//	delete[] _list;
-//	_list = nullptr;
-//}
+void AccountList::clear() {
+	_list.clear();
+}
 
 const AccountPtr AccountList::operator[](size_t index) const {	
 	return _list[index];
@@ -41,6 +34,10 @@ AccountPtr AccountList::operator[](size_t index) {
 
 void AccountList::add(const AccountPtr account) {
 	_list.push_back(account);		
+}
+
+size_t AccountList::get_size() const {
+	return _list.size();
 }
 
 void AccountList::insert(AccountPtr account, int index) {
