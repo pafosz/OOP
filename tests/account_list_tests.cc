@@ -4,7 +4,7 @@
 
 using namespace account;
 
-Account User1 = { payment, "Ilya", 3500, 0 };
+Payment User1 = { payment, "Ilya", 3500, 0 };
 Account User2 = { deposit, "Andrew", 120, 2 };
 Account User3 = { credit, "Polina", 95500, 1 };
 Account User4 = { deposit, "Oksana", 7550, 1.2 };
@@ -12,9 +12,9 @@ Account User5 = { credit, "Lera" , -250, 1 };
 Account User6 = { deposit, "Vanya", 6000, 2 };
 
 
-TEST(UsersTests, SizeTest) {
+TEST(AccountListTests, SizeTest) {
 	// Arrange
-	Users accounts;
+	AccountList accounts;
 	
 	// Act
 	accounts.add(User1);
@@ -26,9 +26,9 @@ TEST(UsersTests, SizeTest) {
 	EXPECT_EQ(accounts.get_size(), 4);
 }
 
-TEST(UsersTests, IndexOfMaxBalance) {
+TEST(AccountListTests, IndexOfMaxBalance) {
 	// Arrange
-	Users accounts;	
+	AccountList accounts;	
 
 	// Act
 	accounts.add(User1);
@@ -41,9 +41,9 @@ TEST(UsersTests, IndexOfMaxBalance) {
 	ASSERT_EQ(index, 2);
 }
 
-TEST(UsersTests, InsertThrowTest) {
+TEST(AccountListTests, InsertThrowTest) {
 	// Arrange
-	Users accounts;
+	AccountList accounts;
 
 	// Act
 	accounts.add(User1);
@@ -59,9 +59,9 @@ TEST(UsersTests, InsertThrowTest) {
 
 }
 
-TEST(UsersTests, RemoveThrowTest) {
+TEST(AccountListTests, RemoveThrowTest) {
 	// Arrange
-	Users accounts;
+	AccountList accounts;
 
 	// Act
 	accounts.add(User1);
@@ -75,9 +75,9 @@ TEST(UsersTests, RemoveThrowTest) {
 	EXPECT_EQ(accounts[2].get_balance(), 7550);
 }
 
-TEST(UsersTests, AddThrowTest) {
+TEST(AccountListTests, AddThrowTest) {
 	// Arrange
-	Users accounts;
+	AccountList accounts;
 
 	// Act
 	accounts.add(User1);
@@ -101,18 +101,18 @@ TEST(UsersTests, AddThrowTest) {
 
 }
 
-TEST(UsersTests, Get_Item_ThrowTest) {
+TEST(AccountListTests, Get_Item_ThrowTest) {
 	// Arrange
-	Users accounts;
+	AccountList accounts;
 	// Act
 
 	// Assert
 	ASSERT_ANY_THROW(accounts.get_item(0));
 }
 
-TEST(UsersTests, AccrualListTest) {
+TEST(AccountListTests, AccrualListTest) {
 	// Arrange
-	Users accounts;
+	AccountList accounts;
 	
 
 	// Act
@@ -130,9 +130,9 @@ TEST(UsersTests, AccrualListTest) {
 	ASSERT_EQ(index, 2);
 }
 
-TEST(UsersTests, Get_ItemTest) {
+TEST(AccountListTests, Get_ItemTest) {
 	// Arrange
-	Users accounts;
+	AccountList accounts;
 	
 	// Act
 	accounts.add(User1);

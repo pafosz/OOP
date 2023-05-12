@@ -1,86 +1,32 @@
 #include "Account/account.h"
-#include <stdexcept>
-
 
 using namespace account;
 using namespace std;
 
-Account::Account() :
-	_type(AccountType::payment),
-	_name(""),
-	_balance(0),
-	_percent(0) {}
+Account::Account() : _name(""),	_balance(0) {}
+Account::Account(std::string name, float balance) :	_name(name), _balance(balance) {}
+Account::Account(std::string name, float balance, float percent): _name(name), _balance(balance), _percent(percent){}
+std::string Account::get_name() const { return _name; }
+float Account::get_balance() const { return _balance; }
+float Account::get_percent() const { return _percent; }
 
-Account::Account(AccountType type, std::string name, float balance) :
-	_type(AccountType::payment),
-	_name(name),
-	_balance(balance),
-	_percent(0) {}
+Payment::Payment() : Account() {}
+Payment::Payment() : Account(_name, _balance) {}
+void Payment::print(std::ostream& stream) const { cout << "Тип счёта: расчётный\n ФИО: " << _name << "\n Баланс: " << _balance << endl; }
+shared_ptr<Account> Payment::clone() const { return make_shared<Payment>(_name, _balance); }
 
-Account::Account(AccountType type, std::string name, float balance, float percent) :
-	_type(type),
-	_name(name),
-	_balance(balance),
-	_percent(percent) {}
+Deposit::Deposit() : Account() {}
+Deposit::Deposit() : Account(_name, _balance, _percent) {}
+void Deposit::print(std::ostream& stream) const { cout << "Тип счёта: депозитный\n ФИО: " << _name << "\n Баланс: " << _balance << "р.\n Процент: " << _percent << "%" << endl; }
+shared_ptr<Account> Deposit::clone() const { return make_shared<Deposit>(_name, _balance, _percent); }
+float Deposit::accrual() const { return _balance + (_balance / 100 * _percent / 12); }
 
-std::string Account::get_type() const {
-	switch (_type)
-	{
-	case AccountType::payment:
-		return "Payment";
-	case AccountType::deposit:
-		return "Deposit";
-	case AccountType::credit:
-		return "Credit";
-	default:
-		throw runtime_error("Unknown type");
-	}
-}
-
-std::string Account::get_name() const {
-	return _name;
-}
-
-float Account::get_balance() const {
-	return _balance;
-}
-
-float Account::get_percent() const {
-	return _percent;
-}
-
-float Account::accrual() {
-	switch (_type)
-	{
-	case AccountType::payment: break;
-
-	case AccountType::deposit:
-
-		if (_balance > 0)
-			_balance += _balance / 100 * _percent / 12; //начисление на _balance процентов на депозит за месяц по ставке _percent
-		break;
+Credit::Credit() : Account() {}
+Credit::Credit() : Account(_name, _balance, _percent) {}
+void Credit::print(std::ostream& stream) const { cout << "Тип счёта: кредитный\n ФИО: " << _name << "\n Баланс: " << _balance << "р.\n Процент: " << _percent << "%" << endl; }
+shared_ptr<Account> Credit::clone() const { return make_shared<Credit>(_name, _balance, _percent); }
+float Credit::accrual() const { return _balance - (abs(_balance) / 100 * _percent / 12); }
 
 
-	case AccountType::credit:		
-		if (_balance < 0)
-			_balance -= abs(_balance) / 100 * _percent / 12; //начисление на _balance процентов на кредит за месяц по ставке _percent		
-		break;
 
-	default:
-		throw runtime_error("[Account::accrual]Invalid type");
-		break;
-	}
-	return _balance;
-}
 
-std::ostream& account::operator<<(std::ostream& stream, const Account& user) {
-	if (user.get_type() == "Payment")
-		stream << "Account type: " << user.get_type() << " \n " 
-		<< "    Owner's full name: " << user.get_name() << " \n " << "    Balance: " << user.get_balance() << "р." << endl;
-	else
-		stream << "Account type: " << user.get_type() << " \n "
-		<< "    Owner's full name: " << user.get_name() << " \n " 
-		<< "    Balance: " << user.get_balance() << "р.\n"
-		<< "     Percent: " << user.get_percent() << "%" << endl;
-	return stream;
-}

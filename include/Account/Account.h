@@ -7,42 +7,79 @@
 #include <windows.h>
 #include <conio.h>
 #include <iostream>
+#include <memory>
+#include <vector>
 
-namespace account {
-
-	enum AccountType {
-		payment = 1,
-		deposit,
-		credit
-	};
+namespace account {	
 
 	class Account {
+	protected:
 
-		AccountType _type;
 		std::string _name;
 		float _balance;
 		float _percent;
+		
 
 	public:
-
 		Account();
-		Account(AccountType type, std::string name, float balance);
-		Account(AccountType type, std::string name, float balance, float percent);
-
-		std::string get_type() const;
+		Account(std::string name, float balance);
+		Account(std::string name, float balance, float percent);
+		
 		std::string get_name() const;
 		float get_balance() const;
 		float get_percent() const;
 
-		
 
-		float accrual();
+		virtual void print(std::ostream& stream) const = 0;
 
+		virtual std::shared_ptr<Account> clone() const = 0;
+
+		virtual float accrual() const = 0;
 	};
 
-	std::ostream& operator<<(std::ostream& stream, const Account& c);
+	class Payment : public Account {
+	public:
 
-	class Users 
+		Payment();
+		Payment(std::string name, float balance);
+
+		void print(std::ostream& stream) const override;
+		std::shared_ptr<Account> clone() const override;
+
+		
+	};
+
+	class Deposit : public Account {
+	
+	public:
+
+		Deposit();
+		Deposit(std::string name, float balance, float percent);
+
+		void print(std::ostream& stream) const override;
+		std::shared_ptr<Account> clone() const override;
+
+		float accrual() const override;
+	};
+
+	class Credit : public Account {
+
+	public:
+
+		Credit();
+		Credit(std::string name, float balance, float percent);
+
+		void print(std::ostream& stream) const override;
+		std::shared_ptr<Account> clone() const override;
+
+		float accrual() const override;
+	};
+
+	
+
+	
+	
+	class AccountList 
 	{
 	private:
 
@@ -51,15 +88,15 @@ namespace account {
 
 	public:
 
-		Users();
+		AccountList();
 
-		Users(const Users& copy);
+		AccountList(const AccountList& copy);
 
-		void swap(Users& rhs) noexcept;
+		void swap(AccountList& rhs) noexcept;
 
-		Users& operator=(Users copy);
+		AccountList& operator=(AccountList copy);
 
-		~Users();
+		~AccountList();
 
 		int get_size() const;
 
@@ -76,13 +113,11 @@ namespace account {
 
 		const Account& get_item(int index) const;
 
-
-
 		int index_of_max_balance() const;
 
 	};
 
-	std::ostream& operator<<(std::ostream& stream, const Users& list);
+	std::ostream& operator<<(std::ostream& stream, const AccountList& list);
 
 }
 

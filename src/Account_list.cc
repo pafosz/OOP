@@ -5,9 +5,9 @@ using namespace std;
 using namespace account;
 
 
-Users::Users() : _list(nullptr), _size(0) { }
+AccountList::AccountList() : _list(nullptr), _size(0) { }
 
-Users::Users(const Users& copy) :
+AccountList::AccountList(const AccountList& copy) :
 	_list(new Account* [copy._size]),
 	_size(copy._size) 
 {
@@ -15,23 +15,23 @@ Users::Users(const Users& copy) :
 		_list[i] = new Account(*copy._list[i]);
 };
 
-void Users::swap(Users& rhs) noexcept
+void AccountList::swap(AccountList& rhs) noexcept
 {
 	std::swap(_size, rhs._size);
 	std::swap(_list, rhs._list);
 }
 
-Users& Users::operator=(Users copy)
+AccountList& AccountList::operator=(AccountList copy)
 {
 	swap(copy);
 	return *this;
 }
 
-Users::~Users()
+AccountList::~AccountList()
 {	
 	clear();
 }
-void Users::clear() {
+void AccountList::clear() {
 	if (_list == nullptr)
 		return;
 
@@ -44,23 +44,23 @@ void Users::clear() {
 
 
 
-int Users::get_size() const {
+int AccountList::get_size() const {
 	return _size;
 }
 
-const Account& Users::operator[](int index) const {
+const Account& AccountList::operator[](int index) const {
 	if (index < 0 || _size <= index)
-		throw runtime_error("[Users::operator[](const)]Invalid index");
+		throw runtime_error("[AccountList::operator[](const)]Invalid index");
 	return *_list[index];
 }
 
-Account& Users::operator[](int index) {
+Account& AccountList::operator[](int index) {
 	if (index < 0 || _size <= index)
-		throw runtime_error("[Users::operator[]]Invalid index");
+		throw runtime_error("[AccountList::operator[]]Invalid index");
 	return *_list[index];
 }
 
-void Users::add(const Account& user) {
+void AccountList::add(const Account& user) {
 			
 	auto list = new Account * [_size + 1];
 	for (int i = 0; i < _size; ++i)
@@ -73,9 +73,9 @@ void Users::add(const Account& user) {
 	++_size;
 }
 
-void Users::insert(Account user, int index) {
+void AccountList::insert(Account user, int index) {
 	if (index < 0 || _size <= index)
-		throw runtime_error("[Users::insert]Invalid index");
+		throw runtime_error("[AccountList::insert]Invalid index");
 
 	auto list = new Account * [_size + 1];
 	
@@ -92,9 +92,9 @@ void Users::insert(Account user, int index) {
 	++_size;
 }
 
-void Users::remove(int index) {
+void AccountList::remove(int index) {
 	if (index < 0 || _size <= index)
-		throw runtime_error("[Users::remove]Invalid index");
+		throw runtime_error("[AccountList::remove]Invalid index");
 		
 	delete _list[index];
 	for (int i = index; i < _size - 1; ++i)
@@ -103,14 +103,14 @@ void Users::remove(int index) {
 }
 
 
-const Account& Users::get_item(int index) const {
+const Account& AccountList::get_item(int index) const {
 	if (index < 0 || _size <= index)
-		throw runtime_error("[Users::get_item]Invalid index");
+		throw runtime_error("[AccountList::get_item]Invalid index");
 	return *_list[index];
 }
 
 
-std::ostream& account::operator<<(std::ostream& stream, const Users& list) {
+std::ostream& account::operator<<(std::ostream& stream, const AccountList& list) {
 	stream << list.get_size() << " accounts: " << endl;
 	for (int i = 0; i < list.get_size(); ++i)
 		cout << "  " << i + 1 << ") " << list.get_item(i);
@@ -118,7 +118,7 @@ std::ostream& account::operator<<(std::ostream& stream, const Users& list) {
 }
 
 
-int Users::index_of_max_balance() const {
+int AccountList::index_of_max_balance() const {
 
 	int first_index = -1;
 	float max_balance = 0;

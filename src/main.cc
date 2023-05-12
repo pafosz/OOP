@@ -11,7 +11,7 @@ int main()
 	SetConsoleTitle("Accounts");
 	setlocale(LC_ALL, "rus");
 	SetConsoleCP(1251);
-	Users list;
+	AccountList list;
 	Account user;
 
 	menu::text_menu();
