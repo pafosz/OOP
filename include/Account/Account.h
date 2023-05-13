@@ -17,17 +17,14 @@ namespace account {
 
 		std::string _name;
 		float _balance;
-		float _percent;
-
 
 	public:
 		Account();
 		Account(std::string name, float balance);
-		Account(std::string name, float balance, float percent);
+		//Account(std::string name, float balance, float percent);
 
 		std::string get_name() const;
 		float get_balance() const;
-		float get_percent() const;
 
 
 		virtual void print() const = 0;
@@ -50,11 +47,14 @@ namespace account {
 	};
 
 	class Deposit : public Account {
+		
+		float _percent;
 
 	public:
 
 		Deposit();
 		Deposit(std::string name, float balance, float percent);
+		float get_percent() const;
 
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
@@ -64,10 +64,13 @@ namespace account {
 
 	class Credit : public Account {
 
+		float _percent;
+
 	public:
 
 		Credit();
 		Credit(std::string name, float balance, float percent);
+		float get_percent() const;
 
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
