@@ -45,6 +45,8 @@ namespace account {
 
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
+
+		float accrual() const override;
 	};
 
 	class Deposit : public Account {

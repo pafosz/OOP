@@ -14,45 +14,48 @@ void menu::text_menu()
 	cout << " | 4 - вывести список счетов                                         |" << endl;
 	cout << " | 5 - рассчитать баланс счёта по индексу после начисления процентов |" << endl;
 	cout << " | 6 - поиск первого счёта с наибольшим балансом                     |" << endl;
-	cout << " | 7 - выйти из системы                                              |" << endl;
+	cout << " | 7 - очистить список                                               |" << endl;
+	cout << " | 8 - выйти из системы                                              |" << endl;
 	cout << "  -------------------------------------------------------------------" << endl;
 }
 
 int menu::get_key()
 {
 	int key = _getch();
-	if ((key == 49) || (key == 50) || (key == 51) || (key == 52) || (key == 53) || (key == 54) || (key == 55))	
+	if ((key == 49) || (key == 50) || (key == 51) || (key == 52) || (key == 53) || (key == 54) || (key == 55) || (key == 56))
 		return key;	
 }
 
 
-Account menu::create_account()
-{
-	Account user;
+shared_ptr<Account> menu::create_account()
+{	
 	std::string name;
 	int type;
 	float balance, percent;
 
 	cout << "Введите тип счёта(1 - рассчётный, 2 - вклад, 3 - кредит): ";
 	cin >> type;
-	if (type != 1 && type != 2 && type != 3) 
+	if (type != 1 && type != 2 && type != 3)
 		throw runtime_error("Не знаю такого типа");
 	cout << "Введите имя пользователя: ";
 	getline(cin >> ws, name);
 	cout << "Введите баланс: ";
 	cin >> balance;
-	if ((AccountType)type == credit && balance > 0)
-		throw runtime_error("Кредит не может иметь положительный баланс");
-	if ((AccountType)type == payment) {
-		user = { (AccountType)type, name, balance };		
-	}
-	else {
+	if (type == 3 && balance > 0)
+		throw runtime_error("Баланс кредита не может быть положительным");
+
+	switch (type)
+	{
+	case 1:
+		return make_shared<Payment>(name, balance);
+	case 2:
 		cout << "Введите процент: ";
 		cin >> percent;
-		user = { (AccountType)type, name, balance, percent };
-		
+		return make_shared<Deposit>(name, balance, percent);
+	case 3:
+		cout << "Введите процент: ";
+		cin >> percent;
+		return make_shared<Credit>(name, balance, percent);
 	}
-	return user;
 }
-
 

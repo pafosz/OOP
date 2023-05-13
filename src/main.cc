@@ -2,6 +2,7 @@
 #include "Account/account.h"
 #include <Windows.h>
 
+
 using namespace account;
 using namespace menu;
 using namespace std;
@@ -12,20 +13,19 @@ int main()
 	setlocale(LC_ALL, "rus");
 	SetConsoleCP(1251);
 	AccountList list;
-	Account user;
 
 	menu::text_menu();
 
 	while (true)
 	{
-		int choice = menu::get_key();		
-		int index = 0;		
+		int choice = menu::get_key();
+		int index = 0;
 
 		system("cls");
 		menu::text_menu();
 
-		
-		if (choice == 55) {
+
+		if (choice == 56) {
 			list.clear();
 			break;
 		}
@@ -38,7 +38,6 @@ int main()
 		case 50:
 			cout << "¬ведите индекс дл€ вставки: ";
 			cin >> index;
-			
 			list.insert(create_account(), index);
 			break;
 		case 51:
@@ -47,20 +46,26 @@ int main()
 			list.remove(index);
 			break;
 		case 52:
-			cout << list;
+			list.print();
 			break;
 		case 53:
 			cout << "¬ведите индекс счЄта, который хотите рассчитать: ";
 			cin >> index;
-			list[index].accrual();
-			cout << list[index].get_balance();
-			break;
-
+			if (typeid(list[index]) == typeid(Payment)) {
+				cout << "ƒл€ обычного счЄта нельз€ рассчитать остаток по проценту";
+				break;
+				list[index]->accrual();
+				cout << list[index]->get_balance();
+				break;
 		case 54:
 			cout << "»ндекс счЄта с максимальным балансом: " << list.index_of_max_balance() << endl;
 			break;
-		
+		case 55:
+			list.clear();
+			break;
+			}
 		}
 	}
-	return 0;
+		return 0;
+	
 }

@@ -6,9 +6,11 @@
 #include <conio.h>
 #include <cstdio>
 
+using namespace account;
+
 namespace menu
 {
 	void text_menu();
 	int get_key();
-	account::Account create_account();
+	std::shared_ptr<Account> create_account();
 }

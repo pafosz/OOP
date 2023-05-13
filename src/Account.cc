@@ -1,12 +1,10 @@
-#include "account.h"
-
 #include "Account/account.h"
 
 using namespace account;
 using namespace std;
 
-Account::Account() : _name(""),	_balance(0) {}
-Account::Account(std::string name, float balance) :	_name(name), _balance(balance) {}
+Account::Account() : _name(""),	_balance(0), _percent(0) {}
+Account::Account(std::string name, float balance) :	_name(name), _balance(balance){}
 Account::Account(std::string name, float balance, float percent): _name(name), _balance(balance), _percent(percent){}
 std::string Account::get_name() const { return _name; }
 float Account::get_balance() const { return _balance; }
@@ -14,9 +12,10 @@ float Account::get_percent() const { return _percent; }
 
 
 Payment::Payment() : Account() {}
-Payment::Payment(std::string name, float balance) : Payment::Account(_name, _balance) {}
+Payment::Payment(std::string name, float balance) : Account(_name, _balance) {}
 void Payment::print() const { cout << "Тип счёта: расчётный\n ФИО: " << _name << "\n Баланс: " << _balance << endl; }
 shared_ptr<Account> Payment::clone() const { return make_shared<Payment>(_name, _balance); }
+float Payment::accrual() const { return _balance; }
 
 Deposit::Deposit() : Account() {}
 Deposit::Deposit(std::string name, float balance, float percent) : Account(_name, _balance, _percent) {}
