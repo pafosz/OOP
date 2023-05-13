@@ -1,14 +1,14 @@
 #pragma once
-#include <string>
-#include <stdexcept>
-#include <cstdio>
-#include <utility>
 #include <algorithm>
-#include <windows.h>
 #include <conio.h>
+#include <cstdio>
 #include <iostream>
 #include <memory>
+#include <stdexcept>
+#include <string>
+#include <utility>
 #include <vector>
+#include <windows.h>
 
 namespace account {
 
@@ -21,14 +21,11 @@ namespace account {
 	public:
 		Account();
 		Account(std::string name, float balance);
-		//Account(std::string name, float balance, float percent);
 
 		std::string get_name() const;
 		float get_balance() const;
 
-
 		virtual void print() const = 0;
-
 		virtual std::shared_ptr<Account> clone() const = 0;
 
 		virtual float accrual() const = 0;
@@ -36,7 +33,6 @@ namespace account {
 
 	class Payment : public Account {
 	public:
-
 		Payment();
 		Payment(std::string name, float balance);
 
@@ -51,9 +47,9 @@ namespace account {
 		float _percent;
 
 	public:
-
 		Deposit();
 		Deposit(std::string name, float balance, float percent);
+		
 		float get_percent() const;
 
 		void print() const override;
@@ -67,9 +63,9 @@ namespace account {
 		float _percent;
 
 	public:
-
 		Credit();
 		Credit(std::string name, float balance, float percent);
+		
 		float get_percent() const;
 
 		void print() const override;
@@ -77,7 +73,6 @@ namespace account {
 
 		float accrual() const override;
 	};
-
 
 	using AccountPtr = std::shared_ptr<Account>;
 
@@ -88,35 +83,19 @@ namespace account {
 		std::vector<AccountPtr> _list;
 
 	public:
-
 		AccountList() = default;
-
 		AccountList(const AccountList& list);
-
 		void swap(AccountList& list) noexcept;
-
 		AccountList& operator=(AccountList list);
-
 		const AccountPtr operator[](size_t index) const;
-		AccountPtr operator[](size_t index);
-		
+		AccountPtr operator[](size_t index);		
 		size_t get_size() const;
-
 		void add(AccountPtr account);
-
 		void insert(AccountPtr account, int index);
-
 		void remove(int index);
-
 		void print() const;
-
 		void clear();
-
 		int index_of_max_balance() const;
-
 	};
-
-
-
 }
 

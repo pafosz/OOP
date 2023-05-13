@@ -4,38 +4,37 @@
 
 using namespace account;
 
-Payment User1 = { payment, "Ilya", 3500, 0 };
-Account User2 = { deposit, "Andrew", 120, 2 };
-Account User3 = { credit, "Polina", 95500, 1 };
-Account User4 = { deposit, "Oksana", 7550, 1.2 };
-Account User5 = { credit, "Lera" , -250, 1 };
-Account User6 = { deposit, "Vanya", 6000, 2 };
-
+std::shared_ptr<Payment>acc1(std::make_shared<Payment>("Ilya", 3500));
+std::shared_ptr<Deposit>acc2(std::make_shared<Deposit>("Andrew", 120, 2));
+std::shared_ptr<Credit>acc3(std::make_shared<Credit>("Polina", 95500, 1));
+std::shared_ptr<Deposit>acc4(std::make_shared<Deposit>("Oksana", 7550, 1.2));
+std::shared_ptr<Credit>acc5(std::make_shared<Credit>("Lera", -250, 1));
+std::shared_ptr<Deposit>acc6(std::make_shared<Deposit>("Vanya", 6000, 2));
 
 TEST(AccountListTests, SizeTest) {
 	// Arrange
-	AccountList accounts;
+	AccountList list;
 	
 	// Act
-	accounts.add(User1);
-	accounts.add(User2);
-	accounts.add(User3);
-	accounts.add(User4);
+	list.add(acc1);
+	list.add(acc2);
+	list.add(acc3);
+	list.add(acc4);
 
 	// Assert
-	EXPECT_EQ(accounts.get_size(), 4);
+	EXPECT_EQ(list.get_size(), 4);
 }
 
 TEST(AccountListTests, IndexOfMaxBalance) {
 	// Arrange
-	AccountList accounts;	
+	AccountList list;	
 
 	// Act
-	accounts.add(User1);
-	accounts.add(User2);
-	accounts.add(User3);
-	accounts.add(User4);
-	int index = accounts.index_of_max_balance();
+	list.add(acc1);
+	list.add(acc2);
+	list.add(acc3);
+	list.add(acc4);
+	int index = list.index_of_max_balance();
 
 	// Assert
 	ASSERT_EQ(index, 2);
@@ -43,105 +42,72 @@ TEST(AccountListTests, IndexOfMaxBalance) {
 
 TEST(AccountListTests, InsertThrowTest) {
 	// Arrange
-	AccountList accounts;
+	AccountList list;
 
 	// Act
-	accounts.add(User1);
-	accounts.add(User2);
-	accounts.add(User3);
-	accounts.add(User4);
-	//int index = accounts.index_of_max_balance();
-
-	// Assert
+	list.add(acc1);
+	list.add(acc2);
+	list.add(acc3);
+	list.add(acc4);
 	
-	ASSERT_ANY_THROW(accounts.insert(User5, 5));
-	ASSERT_NO_THROW(accounts.insert(User5, 2));
-
+	// Assert	
+	ASSERT_ANY_THROW(list.insert(acc5, 5));
+	ASSERT_NO_THROW(list.insert(acc5, 2));
 }
 
 TEST(AccountListTests, RemoveThrowTest) {
 	// Arrange
-	AccountList accounts;
+	AccountList list;
 
 	// Act
-	accounts.add(User1);
-	accounts.add(User2);
-	accounts.add(User3);
-	accounts.add(User4);
+	list.add(acc1);
+	list.add(acc2);
+	list.add(acc3);
+	list.add(acc4);
 
 	// Assert
-	ASSERT_ANY_THROW(accounts.remove(5));
-	ASSERT_NO_THROW(accounts.remove(2));
-	EXPECT_EQ(accounts[2].get_balance(), 7550);
+	ASSERT_ANY_THROW(list.remove(5));
+	ASSERT_NO_THROW(list.remove(2));
+	EXPECT_EQ(list[2]->get_balance(), 7550);
 }
 
 TEST(AccountListTests, AddThrowTest) {
 	// Arrange
-	AccountList accounts;
+	AccountList list;
 
 	// Act
-	accounts.add(User1);
-	accounts.add(User2);
-	accounts.add(User3);
-	accounts.add(User4);
-	accounts.add(User5);
-	accounts.add(User6);
-	accounts.add(User1);
-	accounts.add(User2);
-	accounts.add(User3);
+	list.add(acc1);
+	list.add(acc2);
+	list.add(acc3);
+	list.add(acc4);
+	list.add(acc5);
+	list.add(acc6);
+	list.add(acc1);
+	list.add(acc2);
+	list.add(acc3);
 	
-
 	// Assert
-	
+	list.remove(2);
+	list.remove(3);
 
-	accounts.remove(2);
-	accounts.remove(3);
-
-	ASSERT_NO_THROW(accounts.add(User5));
-
-}
-
-TEST(AccountListTests, Get_Item_ThrowTest) {
-	// Arrange
-	AccountList accounts;
-	// Act
-
-	// Assert
-	ASSERT_ANY_THROW(accounts.get_item(0));
+	ASSERT_NO_THROW(list.add(acc5));
 }
 
 TEST(AccountListTests, AccrualListTest) {
 	// Arrange
-	AccountList accounts;
-	
+	AccountList list;
 
 	// Act
-	accounts.add(User1);
-	accounts.add(User2);
-	accounts.add(User3);
-	accounts.add(User4);
+	list.add(acc1);
+	list.add(acc2);
+	list.add(acc3);
+	list.add(acc4);
 
-	for (int i = 0; i < accounts.get_size(); ++i) {
-		accounts[i].accrual();
+	for (int i = 0; i < list.get_size(); ++i) {
+		list[i]->accrual();
 	}
-	int index = accounts.index_of_max_balance();
+	int index = list.index_of_max_balance();
 
 	// Assert
 	ASSERT_EQ(index, 2);
-}
-
-TEST(AccountListTests, Get_ItemTest) {
-	// Arrange
-	AccountList accounts;
-	
-	// Act
-	accounts.add(User1);
-	accounts.add(User2);
-	accounts.add(User3);
-	accounts.add(User4);
-
-	Account index = accounts.get_item(3);
-
-	// Assert
-	ASSERT_EQ(index.get_balance(), 7550);
 }
