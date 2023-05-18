@@ -23,15 +23,18 @@ void AccountList::clear() {
 }
 
 const AccountPtr AccountList::operator[](size_t index) const {	
+	if (index < 0 || _list.size() <= index)
+		throw out_of_range("Invalid index");
 	return _list[index];
 }
 
 AccountPtr AccountList::operator[](size_t index) {
-	
+	if (index < 0 || _list.size() <= index)
+		throw out_of_range("Invalid index");
 	return _list[index];
 }
 
-void AccountList::add(const AccountPtr account) {
+void AccountList::add(AccountPtr account) {
 	_list.push_back(account);		
 }
 
@@ -64,11 +67,11 @@ void AccountList::print() const {
 int AccountList::index_of_max_balance() const {
 
 	int first_index = -1;
-	float max_balance = 0;
+	double max_balance = 0;
 
 	for (int i = 0; i < _list.size(); ++i) {
 
-		auto balance = _list[i]->get_balance();
+		double balance = _list[i]->get_balance();
 
 		if ((first_index == -1) || (max_balance < balance)) {
 			first_index = i;

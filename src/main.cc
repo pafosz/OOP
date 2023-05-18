@@ -24,7 +24,6 @@ int main()
 		system("cls");
 		menu::text_menu();
 
-
 		if (choice == 56) {
 			list.clear();
 			break;
@@ -51,21 +50,16 @@ int main()
 		case 53:
 			cout << "Введите индекс счёта, который хотите рассчитать: ";
 			cin >> index;
-			if (typeid(list[index]) == typeid(Payment)) {
-				cout << "Для обычного счёта нельзя рассчитать остаток по проценту";
-				break;
-				list[index]->accrual();
-				cout << list[index]->get_balance();
-				break;
+			list[index]->accrual();
+			cout << list[index]->get_balance();
+			break;
 		case 54:
 			cout << "Индекс счёта с максимальным балансом: " << list.index_of_max_balance() << endl;
 			break;
 		case 55:
 			list.clear();
 			break;
-			}
 		}
 	}
-		return 0;
-	
+	return 0;
 }

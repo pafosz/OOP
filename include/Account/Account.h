@@ -16,62 +16,63 @@ namespace account {
 	protected:
 
 		std::string _name;
-		float _balance;
-
+		double _balance;
+	
 	public:
 		Account();
-		Account(std::string name, float balance);
-
+		Account(const std::string& name, double balance);
+		Account(const Account&) = default;
+		Account& operator=(const Account&) = default;
 		std::string get_name() const;
-		float get_balance() const;
+		double get_balance() const;
 
 		virtual void print() const = 0;
 		virtual std::shared_ptr<Account> clone() const = 0;
 
-		virtual float accrual() const = 0;
+		virtual double accrual() const = 0;
 	};
 
 	class Payment : public Account {
 	public:
 		Payment();
-		Payment(std::string name, float balance);
+		Payment(const std::string& name, double balance);
 
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
 
-		float accrual() const override;
+		double accrual() const override;
 	};
 
 	class Deposit : public Account {
-		
-		float _percent;
+
+		double _percent;
 
 	public:
 		Deposit();
-		Deposit(std::string name, float balance, float percent);
-		
-		float get_percent() const;
+		Deposit(const std::string& name, double balance, double percent);
+
+		double get_percent() const;
 
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
 
-		float accrual() const override;
+		double accrual() const override;
 	};
 
 	class Credit : public Account {
 
-		float _percent;
+		double _percent;
 
 	public:
 		Credit();
-		Credit(std::string name, float balance, float percent);
-		
-		float get_percent() const;
+		Credit(const std::string& name, double balance, double percent);
+
+		double get_percent() const;
 
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
 
-		float accrual() const override;
+		double accrual() const override;
 	};
 
 	using AccountPtr = std::shared_ptr<Account>;
@@ -79,16 +80,16 @@ namespace account {
 	class AccountList
 	{
 	private:
-
 		std::vector<AccountPtr> _list;
-
 	public:
+
 		AccountList() = default;
 		AccountList(const AccountList& list);
-		void swap(AccountList& list) noexcept;
 		AccountList& operator=(AccountList list);
+
+		void swap(AccountList& list) noexcept;
 		const AccountPtr operator[](size_t index) const;
-		AccountPtr operator[](size_t index);		
+		AccountPtr operator[](size_t index);
 		size_t get_size() const;
 		void add(AccountPtr account);
 		void insert(AccountPtr account, int index);

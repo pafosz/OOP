@@ -21,9 +21,9 @@ void menu::text_menu()
 
 int menu::get_key()
 {
-	int key = _getch();
-	if ((key == 49) || (key == 50) || (key == 51) || (key == 52) || (key == 53) || (key == 54) || (key == 55) || (key == 56))
-		return key;	
+	int key = _getch();	
+	if ((key == 49) || (key == 50) || (key == 51) || (key == 52) || (key == 53) || (key == 54) || (key == 55) || (key == 56)) 
+		return key;
 }
 
 
@@ -31,7 +31,7 @@ shared_ptr<Account> menu::create_account()
 {	
 	std::string name;
 	int type;
-	float balance, percent;
+	double balance, percent;
 
 	cout << "¬ведите тип счЄта(1 - рассчЄтный, 2 - вклад, 3 - кредит): ";
 	cin >> type;
