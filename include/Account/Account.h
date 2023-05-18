@@ -29,9 +29,10 @@ namespace account {
 		virtual void print() const = 0;
 		virtual std::shared_ptr<Account> clone() const = 0;
 
-		virtual double accrual() const = 0;
+		virtual double accrual() = 0;
+		
 	};
-
+		
 	class Payment : public Account {
 	public:
 		Payment();
@@ -40,7 +41,7 @@ namespace account {
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
 
-		double accrual() const override;
+		double accrual() override;
 	};
 
 	class Deposit : public Account {
@@ -56,7 +57,7 @@ namespace account {
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
 
-		double accrual() const override;
+		double accrual() override;
 	};
 
 	class Credit : public Account {
@@ -72,7 +73,7 @@ namespace account {
 		void print() const override;
 		std::shared_ptr<Account> clone() const override;
 
-		double accrual() const override;
+		double accrual() override;
 	};
 
 	using AccountPtr = std::shared_ptr<Account>;

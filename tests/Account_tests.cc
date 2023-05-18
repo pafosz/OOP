@@ -23,7 +23,7 @@ TEST(AccountTests, PaymentTest) {
 
 TEST(AccountTests, DepositTest) {
 	// Arrange
-	std::shared_ptr<Deposit>account1(std::make_shared<Deposit>("Ilya", 1000, 2.0));
+	std::shared_ptr<Deposit>account1(std::make_shared<Deposit>("Ilya", 10000.0, 12.0));
 
 	// Act
 	
@@ -33,15 +33,15 @@ TEST(AccountTests, DepositTest) {
 	double accrual = account1->accrual();
 
 	// Assert	
-	EXPECT_EQ(percent, 2);
+	EXPECT_EQ(percent, 12);
 	EXPECT_EQ(name, "Ilya");
-	EXPECT_NEAR(balance, 1000, 0.001);
-	EXPECT_NEAR(accrual, 1020, 0.001);
+	EXPECT_NEAR(balance, 10000.0, 0.1);
+	EXPECT_NEAR(accrual, 10100.0, 0.1);
 }
 
 TEST(AccountTests, CreditTest) {
 	// Arrange
-	std::shared_ptr<Credit>account1(std::make_shared<Credit>("Ilya", -1000, 2));
+	std::shared_ptr<Credit>account1(std::make_shared<Credit>("Ilya", -10000.0, 12));
 
 	// Act	
 	double percent = account1->get_percent();
@@ -50,10 +50,10 @@ TEST(AccountTests, CreditTest) {
 	double accrual = account1->accrual();
 
 	// Assert	
-	EXPECT_EQ(percent, 2);
+	EXPECT_EQ(percent, 12);
 	EXPECT_EQ(name, "Ilya");
-	EXPECT_NEAR(balance, -1000, 0.001);
-	EXPECT_NEAR(accrual, -1020, 0.001);
+	EXPECT_NEAR(balance, -10000.0, 0.1);
+	EXPECT_NEAR(accrual, -10100.0, 0.1);
 }
 
 
