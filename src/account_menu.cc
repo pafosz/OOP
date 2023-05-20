@@ -24,6 +24,8 @@ int menu::get_key()
 	int key = _getch();	
 	if ((key == 49) || (key == 50) || (key == 51) || (key == 52) || (key == 53) || (key == 54) || (key == 55) || (key == 56)) 
 		return key;
+	//throw "Нет такого действия";
+	return 0;
 }
 
 
@@ -41,9 +43,7 @@ shared_ptr<Account> menu::create_account()
 	getline(cin >> ws, name);
 	cout << "Введите баланс: ";
 	cin >> balance;
-	if (type == 3 && balance > 0)
-		throw runtime_error("Баланс кредита не может быть положительным");
-
+	
 	switch (type)
 	{
 	case 1:
@@ -56,6 +56,7 @@ shared_ptr<Account> menu::create_account()
 		cout << "Введите процент: ";
 		cin >> percent;
 		return make_shared<Credit>(name, balance, percent);
+
 	}
 }
 

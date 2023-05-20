@@ -23,43 +23,48 @@ int main()
 
 		system("cls");
 		menu::text_menu();
+		try {
+			if (choice == 56) {
+				list.clear();
+				cout << "¬ы вышли из системы" << endl;
+				break;
+			}
 
-		if (choice == 56) {
-			list.clear();
-			break;
+			switch (choice)
+			{
+			case 49:
+				list.add(create_account());
+				break;
+			case 50:
+				cout << "¬ведите индекс дл€ вставки: ";
+				cin >> index;
+				list.insert(create_account(), index);
+				break;
+			case 51:
+				cout << "¬ведите индекс счЄта, который хотите удалить: ";
+				cin >> index;
+				list.remove(index);
+				break;
+			case 52:
+				list.print();
+				break;
+			case 53:
+				cout << "¬ведите индекс счЄта, который хотите рассчитать: ";
+				cin >> index;
+				list[index]->accrual();
+				cout << list[index]->get_balance() << "р.";
+				break;
+			case 54:
+				cout << "»ндекс счЄта с максимальным балансом: " << list.index_of_max_balance() << endl;
+				break;
+			case 55:
+				list.clear();
+				break;
+			}
 		}
-
-		switch (choice)
-		{
-		case 49:
-			list.add(create_account());
-			break;
-		case 50:
-			cout << "¬ведите индекс дл€ вставки: ";
-			cin >> index;
-			list.insert(create_account(), index);
-			break;
-		case 51:
-			cout << "¬ведите индекс счЄта, который хотите удалить: ";
-			cin >> index;
-			list.remove(index);
-			break;
-		case 52:
-			list.print();
-			break;
-		case 53:
-			cout << "¬ведите индекс счЄта, который хотите рассчитать: ";
-			cin >> index;
-			list[index]->accrual();
-			cout << list[index]->get_balance();
-			break;
-		case 54:
-			cout << "»ндекс счЄта с максимальным балансом: " << list.index_of_max_balance() << endl;
-			break;
-		case 55:
-			list.clear();
-			break;
-		}
+		catch (const exception& ex) {
+			cout << ex.what() << endl;
+		}		
 	}
 	return 0;
 }

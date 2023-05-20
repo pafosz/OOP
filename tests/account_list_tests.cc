@@ -6,7 +6,7 @@ using namespace account;
 
 std::shared_ptr<Payment>acc1(std::make_shared<Payment>("Ilya", 3500));
 std::shared_ptr<Deposit>acc2(std::make_shared<Deposit>("Andrew", 120, 2));
-std::shared_ptr<Credit>acc3(std::make_shared<Credit>("Polina", 95500, 1));
+std::shared_ptr<Credit>acc3(std::make_shared<Credit>("Polina", -95500, 1));
 std::shared_ptr<Deposit>acc4(std::make_shared<Deposit>("Oksana", 7550, 1.2));
 std::shared_ptr<Credit>acc5(std::make_shared<Credit>("Lera", -250, 1));
 std::shared_ptr<Deposit>acc6(std::make_shared<Deposit>("Vanya", 6000, 2));
@@ -37,10 +37,10 @@ TEST(AccountListTests, IndexOfMaxBalance) {
 	int index = list.index_of_max_balance();
 
 	// Assert
-	ASSERT_EQ(index, 2);
+	ASSERT_EQ(index, 3);
 }
 
-TEST(AccountListTests, InsertThrowTest) {
+TEST(AccountListTests, InsertTest) {
 	// Arrange
 	AccountList list;
 
@@ -55,7 +55,7 @@ TEST(AccountListTests, InsertThrowTest) {
 	ASSERT_NO_THROW(list.insert(acc5, 2));
 }
 
-TEST(AccountListTests, RemoveThrowTest) {
+TEST(AccountListTests, RemoveTest) {
 	// Arrange
 	AccountList list;
 
@@ -109,5 +109,5 @@ TEST(AccountListTests, AccrualListTest) {
 	int index = list.index_of_max_balance();
 
 	// Assert
-	ASSERT_EQ(index, 2);
+	ASSERT_EQ(index, 3);
 }

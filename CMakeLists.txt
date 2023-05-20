@@ -20,10 +20,8 @@ endif()
 # Объявляем библиотеку
 add_library(account SHARED 
     "include/account/account.h" 
-    "include/Account/account_menu.h"
     "src/account.cc"
     "src/account_list.cc"    
-    "src/account_menu.cc"
 )
 target_include_directories(account PUBLIC "include")
 
@@ -38,5 +36,9 @@ add_executable(account_tests "tests/account_tests.cc" "tests/account_list_tests.
 target_link_libraries(account_tests account GTest::gtest_main)
 
 # Объявляем исполняемый файл
-add_executable(main "src/main.cc")
+add_executable(main 
+    "include/Account/account_menu.h"
+    "src/main.cc"
+    "src/account_menu.cc"
+)
 target_link_libraries(main account)
